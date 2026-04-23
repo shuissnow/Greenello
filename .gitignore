@@ -1,0 +1,67 @@
+# ===== 機密情報・ローカル設定 =====
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# appsettings の環境別オーバーライド（DB接続文字列・SMTP認証情報等を含む可能性）
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Docker ローカルオーバーライド（ローカルシークレットを含む可能性）
+docker-compose.override.yml
+
+# AWS / SSH 秘密鍵
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Claude Code ローカル設定（パーミッション等の個人設定・メモリ・タスク）
+.claude/settings.local.json
+.claude/todos/
+.claude/memory/
+.claude/skills/
+
+# ===== 依存パッケージ =====
+node_modules/
+
+# ===== .NET ビルド成果物 =====
+bin/
+obj/
+*.user
+.vs/
+TestResults/
+*.coverage
+*.coveragexml
+*.trx
+
+# ===== フロントエンド ビルド成果物 =====
+dist/
+dist-ssr/
+build/
+.next/
+out/
+
+# ===== ログ =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.user
+*.sw?

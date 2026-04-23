@@ -1,0 +1,31 @@
+# ---- dev stage ----
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
+WORKDIR /app
+COPY backend/Greenello.sln .
+COPY backend/Directory.Build.props .
+COPY backend/Greenello.API/Greenello.API.csproj Greenello.API/
+COPY backend/Greenello.Tests/Greenello.Tests.csproj Greenello.Tests/
+RUN dotnet restore
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+CMD ["dotnet", "watch", "run", "--project", "Greenello.API/Greenello.API.csproj"]
+
+# ---- build stage ----
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY backend/Greenello.sln .
+COPY backend/Directory.Build.props .
+COPY backend/Greenello.API/Greenello.API.csproj Greenello.API/
+COPY backend/Greenello.Tests/Greenello.Tests.csproj Greenello.Tests/
+RUN dotnet restore
+COPY backend/ .
+RUN dotnet publish Greenello.API/Greenello.API.csproj -c Release -o /app/publish --no-restore
+
+# ---- prod stage ----
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS prod
+WORKDIR /app
+COPY --from=build /app/publish .
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+ENTRYPOINT ["dotnet", "Greenello.API.dll"]

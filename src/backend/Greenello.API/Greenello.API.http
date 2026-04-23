@@ -1,0 +1,6 @@
+@Greenello.API_HostAddress = http://localhost:5098
+
+GET {{Greenello.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
