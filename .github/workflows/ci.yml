@@ -63,7 +63,7 @@ jobs:
         run: dotnet tool restore
 
       - name: backend-format
-        run: dotnet csharpier format --check .
+        run: dotnet csharpier check .
 
       - name: backend-lint
         run: dotnet build
